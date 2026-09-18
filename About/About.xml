@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ModMetaData>
+	<name>HSK More Balance: Events</name>
+	<author>linyaDev</author>
+	<supportedVersions>
+		<li>1.6</li>
+	</supportedVersions>
+	<packageId>linya.hskmorebalance.events</packageId>
+	<description>
+[English]
+Incident tuning for the Hardcore SK modlist.
+
+- Incidents listed in the settings def are not fired below a minimum player tech level (as calculated by Ignorance Is Bliss): endless night, ice age, mechanoid terraformer.
+- Creepjoiner variants (Anomaly) obey the same kind of gate: the lone genius does not show up below the Industrial level, other variants come instead.
+- Raid Extension surprise events (hostile caravan, lost raider, logging, poaching) pick factions inside the Ignorance Is Bliss tech range, including the case where the faction was set in advance.
+- Hospitality guests: a faction above the player's tech level does not visit, and one far below it does not either (thresholds in the settings def). Invitations from the comms console are not limited.
+
+Adds only its own settings def (Defs/Misc/EventSettings.xml, thresholds are editable there): safe to add to or remove from an existing save.
+
+[Russian]
+Настройка событий для сборки Hardcore SK.
+
+- События из списка настроек не запускаются ниже заданного техуровня игрока (по расчёту Ignorance Is Bliss): бесконечная ночь, ледниковый период, терраформер механоидов.
+- Варианты жуткого присоединившегося (Anomaly) гейтятся так же: одинокий гений не приходит ниже индустриального уровня, вместо него выбираются другие варианты.
+- Внезапные события Raid Extension (враждебный караван, заблудившийся рейдер, лесозаготовка, браконьеры) выбирают фракции внутри диапазона техуровня Ignorance Is Bliss, в том числе когда фракция задана заранее.
+- Гости Hospitality: фракция выше техуровня игрока не приходит, сильно ниже — тоже (границы в настройках). Приглашение через консоль связи не ограничивается.
+
+Из своих дефов только файл настроек (Defs/Misc/EventSettings.xml, пороги правятся там): мод можно безопасно ставить в текущее сохранение и убирать из него.
+	</description>
+	<modDependencies>
+		<li>
+			<packageId>brrainz.harmony</packageId>
+			<displayName>Harmony</displayName>
+		</li>
+	</modDependencies>
+	<loadAfter>
+		<li>brrainz.harmony</li>
+		<li>Ludeon.RimWorld</li>
+		<li>dame.ignorance</li>
+		<li>Orion.Hospitality</li>
+		<li>sr.modrimworld.raidextension</li>
+	</loadAfter>
+</ModMetaData>
