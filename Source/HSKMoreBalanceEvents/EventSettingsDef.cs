@@ -4,17 +4,10 @@ using Verse;
 
 namespace HSKMoreBalanceEvents
 {
-    // Пороги гейтов событий, задаются в Defs/Misc/EventSettings.xml.
-    // Если дефа нет, каждый патч берёт свои запасные значения из кода.
     public class EventSettingsDef : Def
     {
-        // Событие (IncidentDef defName) -> минимальный техуровень игрока
         public Dictionary<string, TechLevel> incidentMinTechLevel;
-        // Вариант жуткого присоединившегося (CreepJoinerFormKindDef defName) ->
-        // минимальный техуровень игрока
         public Dictionary<string, TechLevel> creepJoinerFormMinTechLevel;
-        // Гости Hospitality: на сколько уровней фракция может быть выше / ниже
-        // игрока (-1 = без ограничения)
         public int guestMaxTechAhead = -1;
         public int guestMaxTechBehind = -1;
 
@@ -30,7 +23,6 @@ namespace HSKMoreBalanceEvents
             }
         }
 
-        // Значения на случай отсутствия дефа
         public static readonly Dictionary<string, TechLevel> defaultIncidentMinTechLevel = new Dictionary<string, TechLevel>
         {
             { "LongNight", TechLevel.Industrial },

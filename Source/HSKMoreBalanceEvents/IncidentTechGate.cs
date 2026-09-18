@@ -4,11 +4,6 @@ using Verse;
 
 namespace HSKMoreBalanceEvents
 {
-    // Минимальный техуровень игрока для событий: словарь incidentMinTechLevel
-    // (defName -> TechLevel) в Defs/Misc/EventSettings.xml. Уровень берём из
-    // IgnoranceCompat: с Ignorance Is Bliss — его расчётный, иначе уровень
-    // фракции игрока. Патчим общий вход IncidentWorker.CanFireNow — через него
-    // идут и сторителлер, и dev-меню.
     [StaticConstructorOnStartup]
     public static class IncidentTechGate
     {
@@ -21,7 +16,7 @@ namespace HSKMoreBalanceEvents
                 return;
             }
 
-            new Harmony("linya.hskmorebalanceincidents.incidenttechgate").Patch(canFireNow,
+            new Harmony("linya.hskmorebalanceevents.incidenttechgate").Patch(canFireNow,
                 postfix: new HarmonyMethod(typeof(IncidentTechGate), nameof(CanFireNowPostfix)));
         }
 

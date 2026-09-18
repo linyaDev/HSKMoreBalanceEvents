@@ -6,18 +6,6 @@ using Verse;
 
 namespace HSKMoreBalanceEvents
 {
-    // Минимальный техуровень игрока для вариантов жуткого присоединившегося
-    // (Anomaly): словарь creepJoinerFormMinTechLevel (defName формы -> TechLevel)
-    // в Defs/Misc/EventSettings.xml. Уровень берём из IgnoranceCompat, как в
-    // IncidentTechGate. Варианты — не отдельные события: форма выбирается
-    // случайно по весу внутри CreepJoinerUtility, поэтому IncidentTechGate их не
-    // видит, а XML может только обнулить вес (выключить навсегда).
-    // Ванилла выбирает форму в двух местах:
-    //  - GetCreepjoinerSpecifics при form == null (QuestNode_SetupCreepjoiner);
-    //  - GenerateAndSpawn(Map, float) (квест прихода без заранее выбранной формы).
-    // В обоих подставляем случайную по весу форму только из разрешённых.
-    // Если сейчас ничего не отсечено или разрешённых нет — работает ванилла.
-    // Выбор формы вручную в dev-меню не ограничиваем.
     [StaticConstructorOnStartup]
     public static class CreepJoinerTechGate
     {
@@ -35,7 +23,7 @@ namespace HSKMoreBalanceEvents
                 return;
             }
 
-            var harmony = new Harmony("linya.hskmorebalanceincidents.creepjoinertechgate");
+            var harmony = new Harmony("linya.hskmorebalanceevents.creepjoinertechgate");
             harmony.Patch(specifics,
                 prefix: new HarmonyMethod(typeof(CreepJoinerTechGate), nameof(GetCreepjoinerSpecificsPrefix)));
             harmony.Patch(spawn,
@@ -48,7 +36,6 @@ namespace HSKMoreBalanceEvents
                 form = allowed;
         }
 
-        // Копия ванильного GenerateAndSpawn(Map, float) с отфильтрованной формой
         public static bool GenerateAndSpawnPrefix(Map map, float combatPoints, ref Pawn __result)
         {
             if (!TryGetAllowedForm(out var form))
@@ -64,7 +51,6 @@ namespace HSKMoreBalanceEvents
             return false;
         }
 
-        // false — ничего не отсечено (или все отсечены): пусть выбирает ванилла
         private static bool TryGetAllowedForm(out CreepJoinerFormKindDef form)
         {
             form = null;
@@ -80,11 +66,6 @@ namespace HSKMoreBalanceEvents
             if (allowed.Count == all.Count)
                 return false;
 
-            if (Prefs.DevMode)
-            {
-                var blocked = all.Where(f => !allowed.Contains(f)).Select(f => f.defName);
-                Log.Message($"[HSKMoreBalanceEvents] CreepJoinerTechGate: игрок {playerTech}, отсечены: {string.Join(", ", blocked)}.");
-            }
             return allowed.TryRandomElementByWeight(f => f.Weight, out form);
         }
     }
